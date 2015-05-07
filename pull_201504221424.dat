@@ -1,0 +1,1 @@
+{"klass":"Taps::Pull","database_url":"mysql2://root:admin@localhost/db2","remote_url":"http://httpuser:httppassword@localhost:5000","session_uri":"/sessions/9949211630","stream_state":{},"completed_tables":[],"table_filter":null,"remote_tables_info":{"company":3,"company2":3,"customer":2,"db_sessions":0,"employee":2,"orders":1,"travelrecord":1}}

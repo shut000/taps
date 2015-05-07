@@ -6,6 +6,7 @@ require 'taps/data_stream'
 
 module Taps
 class Server < Sinatra::Base
+
   use Rack::Auth::Basic do |login, password|
     login == Taps::Config.login && password == Taps::Config.password
   end
@@ -52,18 +53,25 @@ class Server < Sinatra::Base
   end
 
   get '/' do
-    "hello"
+  end
+
+  post '/connect' do
+    coonstr=params
+    p coonstr[:source]
+    p coonstr[:dest]
   end
 
   post '/sessions' do
+
     key = rand(9999999999).to_s
 
     if ENV['NO_DEFAULT_DATABASE_URL']
+
       database_url = request.body.string
     else
+
       database_url = Taps::Config.database_url || request.body.string
     end
-
     DbSession.create(:key => key, :database_url => database_url, :started_at => Time.now, :last_access => Time.now)
 
     "/sessions/#{key}"
@@ -118,6 +126,7 @@ class Server < Sinatra::Base
     halt 404 unless session
 
     schema_data = request.body.read
+
     Taps::Utils.load_schema(session.database_url, schema_data)
   end
 
@@ -126,6 +135,7 @@ class Server < Sinatra::Base
     halt 404 unless session
 
     index_data = request.body.read
+
     Taps::Utils.load_indexes(session.database_url, index_data)
   end
 
@@ -141,6 +151,7 @@ class Server < Sinatra::Base
     halt 404 unless session
 
     content_type 'application/json'
+
     Taps::Utils.schema_bin(:indexes_individual, session.database_url)
   end
 
@@ -163,7 +174,7 @@ class Server < Sinatra::Base
 
     count = 0
     session.conn do |db|
-      count = db[ params[:table].to_sym.identifier ].count
+      count = db[ params[:table].to_sym].count
     end
     count.to_s
   end
@@ -192,6 +203,9 @@ class Server < Sinatra::Base
         :payload => json,
         :content_type => 'application/json'
     end
+
+    p content_type content_type_value
+    p content
 
     content_type content_type_value
     content

@@ -1,0 +1,20 @@
+$:.unshift File.expand_path("../lib", __FILE__)
+require 'taps/cli'
+arr=["server","mysql2://root:admin@localhost/db1","httpuser","httppassword"]
+Taps::Cli.new(arr.dup).run
+
+=begin
+conn_string="sqlite://C:/Users/wenlong.guo/AppData/Local/Temp/taps.db20150327-16356-vh23vr"
+uri = URI.parse(conn_string)
+p uri
+=end
+
+
+=begin
+$:.unshift File.expand_path("../", __FILE__)
+require "./test2"
+=end
+#<URI::Generic:0x34a0be0 URL:C:/Users/wenlong.guo/AppData/Local/Temp/taps.db20150327-16356-1rhjzlm>
+#<URI::Generic:0x3be10d0 URL:sqlite://C/Users/wenlong.guo/AppData/Local/Temp/taps.db20150327-6300-luafrc>
+#<URI::Generic:0x3d35c00 URL:sqlite://C/Users/wenlong.guo/AppData/Local/Temp/taps.db20150327-15664-1fmdhxg>
+

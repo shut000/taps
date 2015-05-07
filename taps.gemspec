@@ -1,6 +1,5 @@
 $:.unshift File.expand_path("../lib", __FILE__)
 require "taps/version"
-
 Gem::Specification.new do |gem|
   gem.name        = "taps"
   gem.version     = Taps.version

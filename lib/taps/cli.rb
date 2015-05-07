@@ -9,8 +9,9 @@ Taps::Config.taps_database_url = ENV['TAPS_DATABASE_URL'] || begin
   # this is dirty but it solves a weird problem where the tempfile disappears mid-process
   require 'sqlite3'
   $__taps_database = Tempfile.new('taps.db')
+
   $__taps_database.open()
-  "sqlite://#{$__taps_database.path}"
+  "#{$__taps_database.path}"
 end
 
 module Taps
@@ -25,8 +26,10 @@ class Cli
     method = (argv.shift || 'help').to_sym
     if [:pull, :push, :server, :version].include? method
       send(method)
+
     else
       help
+
     end
   end
 
@@ -56,15 +59,16 @@ class Cli
     Taps::Config.database_url = opts[:database_url]
     Taps::Config.login = opts[:login]
     Taps::Config.password = opts[:password]
-
     Taps::Config.verify_database_url
     require 'taps/server'
+
     Taps::Server.run!({
       :port => opts[:port],
       :environment => :production,
       :logging => true,
       :dump_errors => true,
     })
+
   end
 
   def version

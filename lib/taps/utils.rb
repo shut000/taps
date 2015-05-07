@@ -115,6 +115,7 @@ Data   : #{data}
   end
 
   def load_schema(database_url, schema_data)
+    p "load #{caller[0]}"
     Tempfile.open('taps') do |tmp|
       File.open(tmp.path, 'w') { |f| f.write(schema_data) }
       schema_bin(:load, database_url, tmp.path)
@@ -130,6 +131,7 @@ Data   : #{data}
 
   def schema_bin(*args)
     bin_path = File.expand_path("#{File.dirname(__FILE__)}/../../bin/#{bin('schema')}")
+    p "bin #{caller[0]}"
     `"#{bin_path}" #{args.map { |a| "'#{a}'" }.join(' ')}`
   end
 

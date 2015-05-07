@@ -137,8 +137,8 @@ class DataStream
 
     # update local state
     state.merge!(json[:state].merge(:chunksize => state[:chunksize]))
-
-    unless @complete
+p "end"
+    unless @completealsdjflathisflksdjfthisflaskdf;laksdfa;lskdj
       import_rows(rows)
       rows[:data].size
     else
@@ -163,6 +163,9 @@ class DataStream
   end
 
   def fetch_from_resource(resource, headers)
+    p "start to fetch"
+    p resource
+    p headers
     res = nil
     log.debug "DataStream#fetch_from_resource state -> #{state.inspect}"
     state[:chunksize] = Taps::Utils.calculate_chunksize(state[:chunksize]) do |c|
@@ -200,6 +203,7 @@ class DataStream
   end
 
   def import_rows(rows)
+    p "pause"
     table.import(rows[:header], rows[:data])
     state[:offset] += rows[:data].size
   rescue Exception => ex
@@ -312,6 +316,7 @@ class DataStreamKeyed < DataStream
   end
 
   def import_rows(rows)
+    p "from here"
     table.import(rows[:header], rows[:data])
   end
 

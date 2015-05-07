@@ -4,13 +4,15 @@ require 'taps/version'
 Sequel.datetime_class = DateTime
 
 module Taps
-  def self.exiting=(val)
-    @@exiting = val
-  end
 
-  def exiting?
-    (@@exiting ||= false) == true
-  end
+  #Lightning: Not used!
+  # def self.exiting=(val)
+  #   @@exiting = val
+  # end
+  #
+  # def exiting?
+  #   (@@exiting ||= false) == true
+  # end
 
   class Config
     class << self

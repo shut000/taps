@@ -228,7 +228,6 @@ class Operation
       when :resume then eval(opts[:klass])
       else raise "Unknown Operation Type -> #{type}"
     end
-
     klass.new(database_url, remote_url, opts)
   end
 end
@@ -262,6 +261,7 @@ class Pull < Operation
     progress = ProgressBar.new('Schema', tables.size)
     tables.each do |table_name, count|
       schema_data = session_resource['pull/schema'].post({:table_name => table_name}, http_headers).to_s
+      p schema_data
       log.debug "Table: #{table_name}\n#{schema_data}\n"
       output = Taps::Utils.load_schema(database_url, schema_data)
       puts output if output
@@ -281,6 +281,7 @@ class Pull < Operation
         :chunksize => default_chunksize,
         :table_name => table_name
       })
+      p stream
       pull_data_from_table(stream, progress)
     end
   end
@@ -355,8 +356,9 @@ class Pull < Operation
     apply_table_filter(tables).each do |table_name|
       retries = 0
       begin
-        count = session_resource['pull/table_count'].post({:table => table_name}, http_headers).to_s.to_i
+        count = OkJson.decode(session_resource['pull/table_count'].post({:table => table_name}, http_headers)).to_s.to_i
         data[table_name] = count
+          p "pause"
       rescue RestClient::Exception
         retries += 1
         retry if retries <= max_retries

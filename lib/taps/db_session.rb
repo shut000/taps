@@ -1,5 +1,5 @@
-Sequel::Model.db = Sequel.connect(Taps::Config.taps_database_url)
-
+#Sequel::Model.db = Sequel.connect(Taps::Config.taps_database_url)
+Sequel::Model.db = Sequel.sqlite(Taps::Config.taps_database_url)
 class DbSession < Sequel::Model
   plugin :schema
   set_schema do
