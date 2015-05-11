@@ -22,6 +22,6 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "mocha"
   gem.add_development_dependency "rack-test"
   gem.add_development_dependency "rake"
-  gem.add_development_dependency "rcov"
+  gem.add_development_dependency "simplecov-rcov"
 end
 
